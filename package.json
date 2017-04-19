@@ -4,7 +4,8 @@
   "description": "Sample project using TypeScript with AngularJS",
   "main": "src/index.ts",
   "scripts": {
-    "test": "karma start test/karma.config.js",
+    "test": "karma start test/karma.config.js --single-run",
+    "watch": "karma start test/karma.config.js",
     "build": "webpack",
     "start": "webpack-dev-server",
     "prestart": "npm run build"
