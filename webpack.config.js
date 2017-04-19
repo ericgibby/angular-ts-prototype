@@ -16,7 +16,7 @@ const html = new HtmlWebpackPlugin({
 module.exports = {
 	entry: './src/main.ts',
 	output: {
-		filename: 'angular-ts.js',
+		filename: 'angular-ts.[chunkhash].js',
 		path: outputPath
 	},
 	module: {
