@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const outputPath = path.join(__dirname, 'dist');
@@ -13,10 +14,23 @@ const html = new HtmlWebpackPlugin({
 	template: './src/index.html'
 });
 
+const vendorChunk = new webpack.optimize.CommonsChunkPlugin({
+	name: 'vendor',
+	minChunks: (module) => {
+		return module.context && module.context.indexOf('node_modules') !== -1;
+	}
+});
+
+const manifestChunk = new webpack.optimize.CommonsChunkPlugin({
+	name: 'manifest'
+});
+
 module.exports = {
-	entry: './src/main.ts',
+	entry: {
+		main: './src/main.ts'
+	},
 	output: {
-		filename: 'angular-ts.[chunkhash].js',
+		filename: '[name].[chunkhash].js',
 		path: outputPath
 	},
 	module: {
@@ -45,7 +59,9 @@ module.exports = {
 	},
 	plugins: [
 		extractSass,
-		html
+		html,
+		vendorChunk,
+		manifestChunk
 	],
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js']
