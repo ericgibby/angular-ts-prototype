@@ -1,10 +1,23 @@
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const outputPath = path.join(__dirname, 'dist');
+
+const extractSass = new ExtractTextPlugin({
+	filename: '[name].[contenthash].css',
+	disable: process.env.NODE_ENV === 'development'
+});
+
+const html = new HtmlWebpackPlugin({
+	filename: 'index.html',
+	template: './src/index.html'
+});
 
 module.exports = {
 	entry: './src/main.ts',
 	output: {
-		filename: './public/dist/angular-ts.js',
-		path: __dirname
+		filename: 'angular-ts.js',
+		path: outputPath
 	},
 	module: {
 		rules: [
@@ -17,16 +30,30 @@ module.exports = {
 				test: /\.tsx?$/,
 				loader: 'ts-loader',
 				exclude: /node_modules/
+			},
+			{
+				test: /\.scss$/,
+				use: extractSass.extract({
+					use: [
+						{ loader: 'css-loader' },
+						{ loader: 'sass-loader' }
+					],
+					fallback: 'style-loader'
+				})
 			}
 		]
 	},
+	plugins: [
+		extractSass,
+		html
+	],
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js']
 	},
 	devtool: 'inline-source-map',
 	devServer: {
-		publicPath: path.join(__dirname, 'public'),
-		contentBase: path.join(__dirname, 'public'),
+		publicPath: path.join(__dirname, 'dist'),
+		contentBase: path.join(__dirname, 'dist'),
 		port: 8080
 	}
 };
