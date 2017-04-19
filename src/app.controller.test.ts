@@ -3,22 +3,30 @@ import 'angular-mocks';
 import { App } from './app.controller';
 
 describe('AppController', () => {
-	let timeout: ng.ITimeoutService;
+	let interval: ng.IIntervalService,
+		scope: ng.IRootScopeService,
+		ctrl: App.Controller;
 
 	beforeEach(() => {
-		angular.mock.inject(($timeout: ng.ITimeoutService) => {
-			timeout = $timeout;
+		angular.mock.inject(($interval: ng.IIntervalService, $rootScope: ng.IRootScopeService) => {
+			interval = $interval;
+			scope = $rootScope;
 		});
+
+		ctrl = new App.Controller(interval);
 	});
 
 	it('initializes', () => {
-		let ctrl = new App.Controller(timeout);
 		expect(ctrl).toBeDefined();
 	});
 
 	it('title property initialized', () => {
-		let ctrl = new App.Controller(timeout);
 		expect(ctrl.title).toBe('Hello');
+	});
+
+	it('title updates when $interval fires', () => {
+		interval.flush(1000);
+		expect(ctrl.title).toBe('World');
 	});
 });
 
