@@ -1,5 +1,6 @@
-import { module } from 'angular';
+import * as angular from 'angular';
 import { App } from './app.controller';
 
-module('angular-ts', [])
+angular
+	.module('angular-ts', [])
 	.controller('AppController', App.Controller);

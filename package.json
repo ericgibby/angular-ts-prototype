@@ -4,7 +4,9 @@
   "description": "Sample project using TypeScript with AngularJS",
   "main": "src/index.ts",
   "scripts": {
-    "test": "karma start test/karma.config.js"
+    "test": "karma start test/karma.config.js",
+    "build": "webpack",
+    "start": "webpack-dev-server"
   },
   "author": "Imagine Learning",
   "license": "MIT",
@@ -19,7 +21,11 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-typescript": "^3.0.0",
     "phantomjs-prebuilt": "^2.1.14",
-    "typescript": "^2.2.2"
+    "source-map-loader": "^0.2.1",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.2.2",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
     "angular": "^1.6.4"
