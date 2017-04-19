@@ -6,7 +6,8 @@
   "scripts": {
     "test": "karma start test/karma.config.js",
     "build": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "prestart": "npm run build"
   },
   "author": "Imagine Learning",
   "license": "MIT",

@@ -1,7 +1,9 @@
+const path = require('path');
+
 module.exports = {
 	entry: './src/main.ts',
 	output: {
-		filename: './.build/angular-ts.js',
+		filename: './public/dist/angular-ts.js',
 		path: __dirname
 	},
 	module: {
@@ -21,5 +23,10 @@ module.exports = {
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js']
 	},
-	devtool: 'inline-source-map'
+	devtool: 'inline-source-map',
+	devServer: {
+		publicPath: path.join(__dirname, 'public'),
+		contentBase: path.join(__dirname, 'public'),
+		port: 8080
+	}
 };
